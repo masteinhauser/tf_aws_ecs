@@ -109,7 +109,7 @@ resource "aws_autoscaling_group" "ecs" {
   load_balancers       = var.load_balancers
   enabled_metrics      = var.enabled_metrics
 
-  tags = concat(
+  tags = merge(
     map("key","Name","value","${var.name} ${var.tagName}","propagate_at_launch", true),
     flatten(var.extra_tags)
   )
