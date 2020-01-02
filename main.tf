@@ -109,14 +109,10 @@ resource "aws_autoscaling_group" "ecs" {
   load_balancers       = var.load_balancers
   enabled_metrics      = var.enabled_metrics
 
-  tags = merge(
-    {
-      "key"                 = "Name"
-      "value"               = "${var.name} ${var.tagName}"
-      "propagate_at_launch" = true
-    },
+  tags = "${merge(
+    map("key","Name","value","${var.name} ${var.tagName}","propagate_at_launch",true),
     var.extra_tags,
-  )
+  )}"
 
   lifecycle {
     create_before_destroy = true
@@ -140,14 +136,11 @@ resource "aws_autoscaling_group" "ecs_second" {
   load_balancers       = var.load_balancers
   enabled_metrics      = var.enabled_metrics
 
-  tags = merge(
-    {
-      "key"                 = "Name"
-      "value"               = "${var.name} ${var.tagName} Second"
-      "propagate_at_launch" = true
-    },
+
+  tags = "${merge(
+    map("key","Name","value","${var.name} ${var.tagName} Second","propagate_at_launch",true),
     var.extra_tags,
-  )
+  )}"
 
   lifecycle {
     create_before_destroy = true
