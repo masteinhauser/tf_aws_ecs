@@ -110,8 +110,12 @@ resource "aws_autoscaling_group" "ecs" {
   enabled_metrics      = var.enabled_metrics
 
   tags = merge(
-    map("key","Name","value","${var.name} ${var.tagName}","propagate_at_launch", true),
-    flatten(var.extra_tags)
+    {
+      "key"                 = "Name"
+      "value"               = "${var.name} ${var.tagName}"
+      "propagate_at_launch" = true
+    },
+    var.extra_tags,
   )
 
   lifecycle {
